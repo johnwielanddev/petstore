@@ -18,7 +18,7 @@ paths:
               $ref: '#/definitions/Status'
   /store/order/:
     post:
-      operationId: api.store.get_order
+      operationId: api.store.post_order
       parameters:
         - in: "body"
           name: "order"
@@ -52,6 +52,20 @@ paths:
           description: "successful operation"
           schema:
             $ref: '#/definitions/Order'
+
+    delete:
+      operationId: api.store.delete_order_by_id
+      parameters:
+        - name: order_id
+          in: "path"
+          required: true
+          type: "integer"
+          maximum: 10.0
+          minimum: 1.0
+          format: "int64"
+      responses:
+        200:
+          description: "deleted successfully"
 
 
 definitions:

@@ -1,6 +1,7 @@
-from unittest import TestCase, mock
+from unittest import TestCase, mock, skip
 
-from api.store import get, store_objs, find_order_by_id, orders, get_order_by_id 
+from api.store import get, post_order, get_order_by_id, delete_order_by_id
+from providers.store_provider import StoreProvider
 
 test_orders = [
   {
@@ -29,26 +30,40 @@ test_orders = [
   },
 ]
 
+test_status = {
+  'OK': 0,
+  "VACCINATED": 0,
+  "DEAD": 0,
+  "CAT": 0
+}
 
-class StoreInventoryTest(TestCase):
+class StoreAPITest(TestCase):
   def test_get_store_inventory(self):
-    self.assertEqual(get(), store_objs)
+    store_provider = StoreProvider({}, test_status)
 
+    self.assertEqual(get(store_provider), test_status)
+  
+  def test_get_order_by_id_order_not_found(self):
+    store_provider = StoreProvider(test_orders, {})
+
+    self.assertEqual(get_order_by_id(store_provider, 1), (None, 404))
+
+
+class StoreProviderTest(TestCase):
+  def test_find_order_by_id_success(self):
+    store_provider = StoreProvider(test_orders, {})
+
+    self.assertEqual(store_provider.find_order_by_id(3), test_orders[1])
+
+  def test_find_order_by_id_fail(self):
+    store_provider = StoreProvider(test_orders, {})
+    
+    self.assertEqual(store_provider.find_order_by_id(55), None)
+
+  @skip
   @mock.patch('api.store.get_all_orders')
-  def test_find_order_by_id_success(self, mock_orders):
-    mock_orders.return_value = test_orders
+  def test_delete_order_by_id_successful(self):
+    mock_get_all_orders.return_value = test_orders
+    self.assertEqual(delete_order_by_id(0), (None, 202))
 
-    self.assertEqual(find_order_by_id(3), test_orders[1])
-
-  @mock.patch('api.store.get_all_orders')
-  def test_find_order_by_id_fail(self, mock_orders):
-    mock_orders.return_value = test_orders
-
-    self.assertEqual(find_order_by_id(55), None)
-
-  @mock.patch('api.store.find_order_by_id')
-  def test_get_order_by_id_order_not_found(self, mock_find_order_by_id):
-    mock_find_order_by_id.return_value = None
-
-    self.assertEqual(get_order_by_id(1), (None, 404))
 
