@@ -1,0 +1,27 @@
+swagger: "2.0"
+
+info:
+  title: "Swagger Petstore"
+  version: "1.0.0"
+
+basePath: /
+
+paths:
+  /store/inventory/:
+    get:
+      responses:
+        '200':
+          description: 'Returns a map of status codes to quantities'
+          schema:
+            type: "object"
+            items:
+              $ref: '#/definitions/Status'
+
+
+definitions:
+  Status:
+    type: "object"
+    additionalProperties:
+      type: "integer"
+      format: "int32"
+
