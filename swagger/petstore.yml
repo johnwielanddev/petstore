@@ -31,6 +31,8 @@ paths:
           description: "successful operation"
           schema:
             $ref: '#/definitions/Order'
+        400:
+          description: "Invalid Order" 
 
 definitions:
   Status:
