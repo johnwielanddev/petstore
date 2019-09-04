@@ -51,12 +51,14 @@ class StoreAPITestCase(TestCase):
 
     self.assertEqual(response.status_code, 404)
 
-  @skip
-  @mock.patch('api.store.get_all_orders')
-  def test_delete_order_by_id(self, mock_get_all_orders):
-    mock_get_all_orders.return_value = [test_order]
-
+  def test_delete_order_by_id(self):
+    order_to_delete = test_orders[0]
     response = self.app.delete('/store/order/1', follow_redirects=True)
 
     self.assertEqual(response.status_code, 200)
+    self.assertNotIn(order_to_delete, self.store_provider.orders)
 
+  def test_delete_order_not_found(self):
+    response = self.app.delete('/store/order/9', follow_redirects=True)
+
+    self.assertEqual(response.status_code, 404)

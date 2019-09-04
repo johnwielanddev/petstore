@@ -60,10 +60,16 @@ class StoreProviderTest(TestCase):
     
     self.assertEqual(store_provider.find_order_by_id(55), None)
 
-  @skip
-  @mock.patch('api.store.get_all_orders')
   def test_delete_order_by_id_successful(self):
-    mock_get_all_orders.return_value = test_orders
-    self.assertEqual(delete_order_by_id(0), (None, 202))
+    order_to_delete = test_orders[0]
+    store_provider = StoreProvider(test_orders, {})
+    store_provider.delete_order_by_id(0)
 
+    self.assertNotIn(order_to_delete, store_provider.orders)
+
+  def test_delete_order_not_found(self):
+    store_provider = StoreProvider(test_orders, {})
+
+    res = store_provider.delete_order_by_id(9)
+    self.assertEqual(res, False)
 

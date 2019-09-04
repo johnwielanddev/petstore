@@ -1,9 +1,9 @@
-
+import copy
 
 class StoreProvider(object):
   def __init__(self, orders, status):
-    self.orders = orders
-    self.status = status
+    self.orders = copy.deepcopy(orders)
+    self.status = copy.deepcopy(status)
 
   def get_all_orders(self):
     return self.orders
@@ -23,3 +23,11 @@ class StoreProvider(object):
 
   def get_orders(self):
     return self.orders
+
+  def delete_order_by_id(self, order_id):
+    order = self.find_order_by_id(order_id)
+    if not order:
+      return False
+
+    self.orders.remove(order)
+    return True

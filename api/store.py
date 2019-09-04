@@ -18,5 +18,9 @@ def get_order_by_id(store_provider: StoreProvider, order_id):
 
   return None, 404 
 
-def delete_order_by_id(order_id):
-  pass 
+@inject
+def delete_order_by_id(store_provider: StoreProvider, order_id):
+  if store_provider.delete_order_by_id(order_id):
+    return None, 200
+
+  return None, 404
