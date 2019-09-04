@@ -1,5 +1,5 @@
 from unittest import mock, skip
-from .testing_client import TestCase, test_orders, test_status
+from testing_client import TestCase, test_orders, test_status
 
 
 class StoreAPITestCase(TestCase):

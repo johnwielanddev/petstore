@@ -21,9 +21,6 @@ class StoreProvider(object):
   def get_status(self):
     return self.status
 
-  def get_orders(self):
-    return self.orders
-
   def delete_order_by_id(self, order_id):
     order = self.find_order_by_id(order_id)
     if not order:
