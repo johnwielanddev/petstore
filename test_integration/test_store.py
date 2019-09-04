@@ -1,5 +1,6 @@
+from unittest import mock
 from .testing_client import TestCase
-from api.store import store_objs
+from api.store import store_objs, orders
 
 
 class StoreAPITestCase(TestCase):
@@ -40,5 +41,27 @@ class StoreAPITestCase(TestCase):
 
     self.assertEqual(response.status_code, 400)
 
+  @mock.patch('api.store.get_all_orders')
+  def test_get_order_by_id_success(self, mock_get_all_orders):
+    test_order = {
+      "id": 1,
+      "petId": 0,
+      "quantity": 0,
+      "shipDate": "2019-09-04T11:37:27.985Z",
+      "status": "placed",
+      "complete": False,
+    }
 
+    mock_get_all_orders.return_value = [test_order]
+    response = self.app.get('/store/order/1', follow_redirects=True) 
+
+    self.assertEqual(response.status_code, 200)
+    self.assertEqual(response.json, test_order)
+
+  @mock.patch('api.store.get_all_orders')
+  def test_get_order_by_id_no_order(self, mock_get_all_orders):
+    mock_get_all_orders.return_value = []
+    response = self.app.get('/store/order/4', follow_redirects=True)
+
+    self.assertEqual(response.status_code, 404)
 

@@ -11,15 +11,15 @@ orders = []
 def get():
   return store_objs 
 
-def order(order):
+def get_order(order):
   orders.append(order)
   return order
 
-def get_orders():
+def get_all_orders():
   return orders
 
 def find_order_by_id(order_id):
-  for order in get_orders():
+  for order in get_all_orders():
     if (order['id'] == order_id):
       return order
 
@@ -27,8 +27,9 @@ def find_order_by_id(order_id):
 
 
 def get_order_by_id(order_id):
-  if find_order_by_id(order_id) != None:
-      return order, 200
+  order = find_order_by_id(order_id)
+  if order:
+    return order, 200
 
   return None, 404 
 

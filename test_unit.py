@@ -1,6 +1,6 @@
 from unittest import TestCase, mock
 
-from api.store import get, store_objs, find_order_by_id, orders 
+from api.store import get, store_objs, find_order_by_id, orders, get_order_by_id 
 
 test_orders = [
   {
@@ -34,17 +34,21 @@ class StoreInventoryTest(TestCase):
   def test_get_store_inventory(self):
     self.assertEqual(get(), store_objs)
 
-  @mock.patch('api.store.get_orders')
+  @mock.patch('api.store.get_all_orders')
   def test_find_order_by_id_success(self, mock_orders):
     mock_orders.return_value = test_orders
 
     self.assertEqual(find_order_by_id(3), test_orders[1])
 
-  @mock.patch('api.store.get_orders')
+  @mock.patch('api.store.get_all_orders')
   def test_find_order_by_id_fail(self, mock_orders):
     mock_orders.return_value = test_orders
 
     self.assertEqual(find_order_by_id(55), None)
 
+  @mock.patch('api.store.find_order_by_id')
+  def test_get_order_by_id_order_not_found(self, mock_find_order_by_id):
+    mock_find_order_by_id.return_value = None
 
+    self.assertEqual(get_order_by_id(1), (None, 404))
 
