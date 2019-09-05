@@ -1,22 +1,19 @@
 Pet Store API
--------------
+=============
 
 A very simple pet store API. Only /store/ is implemented.
 
-Setup
-=====
-
+Setup:
 $ mkvirtualenv petstore
 $ pip3 install -r requirements.txt
 
-Run
-===
+Run:
 
 $ workon petstore
 $ python3 app.py
 
 Test
-====
+----
 
 All tests:
 $ python3 -m unittest
