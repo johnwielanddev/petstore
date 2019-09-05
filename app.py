@@ -18,7 +18,7 @@ def configure_bindings(binder):
 
 
 app = connexion.App(__name__, port=9090, specification_dir='swagger/')
-app.add_api('petstore.yml', resolver=RestyResolver('api'))
+app.add_api('petstore.yml', resolver=RestyResolver('api'), strict_validation=True)
 
 if __name__ == '__main__':
   FlaskInjector(app=app.app, modules=[configure_bindings])

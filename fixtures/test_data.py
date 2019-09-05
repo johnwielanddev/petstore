@@ -10,7 +10,7 @@ test_orders = [
   },
   {
     "id": 0,
-    "petId": 0,
+    "petId": 4,
     "quantity": 0,
     "shipDate": "2019-09-04T11:37:27.985Z",
     "status": "placed",
@@ -18,7 +18,7 @@ test_orders = [
   },
   {
     "id": 3,
-    "petId": 0,
+    "petId": 5,
     "quantity": 0,
     "shipDate": "2019-09-04T11:37:27.985Z",
     "status": "placed",
@@ -26,7 +26,7 @@ test_orders = [
   },
   {
     "id": 99,
-    "petId": 0,
+    "petId": 6,
     "quantity": 0,
     "shipDate": "2019-09-04T11:37:27.985Z",
     "status": "placed",
