@@ -5,11 +5,13 @@ from flask_injector import FlaskInjector
 from connexion.resolver import RestyResolver
 
 from providers.store_provider import StoreProvider
+from fixtures.test_data import test_orders, test_status
+
 
 def configure_bindings(binder):
   binder.bind(
     StoreProvider,
-    to=StoreProvider({}, {})
+    to=StoreProvider(test_orders, test_status)
   )
 
   return binder

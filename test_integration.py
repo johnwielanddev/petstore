@@ -52,6 +52,11 @@ class StoreAPITestCase(TestCase):
 
     self.assertEqual(response.status_code, 404)
 
+  def test_get_order_by_id_invalid_order_id(self):
+    response = self.app.get('/store/order/A', follow_redirects=True)
+
+    self.assertEqual(response.status_code, 400)
+
   def test_delete_order_by_id(self):
     order_to_delete = test_orders[0]
     response = self.app.delete('/store/order/1', follow_redirects=True)
